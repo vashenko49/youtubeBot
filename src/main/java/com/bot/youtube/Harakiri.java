@@ -4,9 +4,6 @@ import com.github.kiulian.downloader.YoutubeDownloader;
 import com.github.kiulian.downloader.YoutubeException;
 import com.github.kiulian.downloader.model.YoutubeVideo;
 import com.github.kiulian.downloader.model.formats.AudioVideoFormat;
-import com.github.kiulian.downloader.model.formats.Format;
-import com.github.kiulian.downloader.model.formats.VideoFormat;
-import com.github.kiulian.downloader.model.quality.VideoQuality;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,13 +19,15 @@ public class Harakiri {
     public static final Pattern VID_ID_PATTERN = Pattern.compile("(?<=v\\=|youtu\\.be\\/)\\w+"),
             FILENAME_PATTERN = Pattern.compile("(?<=filename\\=\\\").+?(?=\\\")");
 
+    public static String YOUTUBE_PATTERN_ID = "^(?:(?:\\w*.?://)?\\w*.?\\w*-?.?\\w*/(?:embed|e|v|watch|.*/)?\\??(?:feature=\\w*\\.?\\w*)?&?(?:v=)?/?)([\\w\\d_-]+).*";
+
 
     private static String getID(String youtubeUrl) {
-        Matcher m = VID_ID_PATTERN.matcher(youtubeUrl);
-        if (!m.find()) {
+        Matcher matcher = Pattern.compile(YOUTUBE_PATTERN_ID).matcher(youtubeUrl);
+        if (!matcher.find()) {
             throw new IllegalArgumentException("Invalid YouTube URL.");
         }
-        return m.group();
+        return matcher.group(1);
     }
 
 

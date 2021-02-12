@@ -13,8 +13,10 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import java.io.File;
 import java.io.IOException;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.bot.youtube.Harakiri.VID_ID_PATTERN;
+import static com.bot.youtube.Harakiri.YOUTUBE_PATTERN_ID;
 
 @Component
 public class Bot extends TelegramLongPollingBot {
@@ -46,9 +48,12 @@ public class Bot extends TelegramLongPollingBot {
                 execute(new SendMessage().setChatId(message.getChatId()).setText("Hi! Send me link to youtube video"));
             } else {
 
+
+
+
                 String youtubeUrl = message.getText();
-                Matcher m = VID_ID_PATTERN.matcher(youtubeUrl);
-                if (!m.find()) {
+                Matcher matcher = Pattern.compile(YOUTUBE_PATTERN_ID).matcher(youtubeUrl);
+                if (!matcher.find()) {
                     execute(new SendMessage().setChatId(message.getChatId()).setText("No valid! Try again =)"));
                 }else {
 
