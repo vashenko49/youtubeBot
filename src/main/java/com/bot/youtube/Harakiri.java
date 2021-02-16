@@ -42,7 +42,6 @@ public class Harakiri {
 
         List<AudioVideoFormat> audioVideoFormats = video.videoWithAudioFormats();
 
-
         AudioVideoFormat audioVideoFormat = audioVideoFormats.get(0);
 
         File outputDir = new File("my_videos");

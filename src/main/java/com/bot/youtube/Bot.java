@@ -61,12 +61,13 @@ public class Bot extends TelegramLongPollingBot {
                     System.out.println(youtubeUrl);
                     try {
                         mp3 = Harakiri.load(youtubeUrl);
-                        System.out.println("read");
-
-                        SendAudio sendAudio = new SendAudio().setAudio(mp3).setChatId(message.getChatId());
+                        System.out.println(mp3.getName());
+                        File file = new File(mp3.getName().substring(0,mp3.getName().length() - 1)+"3");
+                        mp3.renameTo(file);
+                        SendAudio sendAudio = new SendAudio().setAudio(file).setChatId(message.getChatId());
                         execute(sendAudio);
 
-                        mp3.delete();
+                        file.delete();
                     } catch (Exception e) {
                         e.printStackTrace();
                         execute(new SendMessage().setChatId(message.getChatId()).setText(e.getMessage()));
